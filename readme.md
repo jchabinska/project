@@ -1,3 +1,3 @@
 Julia Chabinska 
 
-Temat: Journal
+Temat: Journal projekt indywidualny
