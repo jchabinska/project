@@ -1,3 +1,4 @@
 Julia Chabinska 
+Maja Binkiewicz
 
-Temat: Journal projekt indywidualny
+Temat: Journal

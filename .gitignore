@@ -3,3 +3,4 @@ venv/
 *.pyc
 __pychache__/
 db.splite3
+.DS_Store
