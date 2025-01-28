@@ -12,7 +12,6 @@ urlpatterns = [
     path('osoba/<int:pk>/update/', OsobaUpdateView.as_view(), name='osoba-update'),  
     path('osoba/<int:pk>/delete/', OsobaDeleteView.as_view(), name='osoba-delete'),  
     path('osoba/<int:pk>/', views.person_view, name='person_view'),
-    path('osoby/', OsobaView.as_view(), name='osoba_view'),
 
     path('persons/', views.person_list, name='person-list'),  
     path('persons/<int:pk>/', views.person_detail, name='person-detail'),  

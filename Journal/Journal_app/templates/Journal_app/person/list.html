@@ -1,0 +1,14 @@
+{% extends "Journal_app/base.html" %}
+
+{% block title %}Lista obiektów Osoba{% endblock %}
+
+{% block content %}
+<h2>Lista obiektów Osoba</h2>
+<p>Aktualnie w mojej bazie dodane są poniższe obiekty Osoba.</p>
+{% for osoba in osoby %}
+    <p>Osoba: {{ osoba.imie }} {{ osoba.nazwisko }}</p>
+    <p>Stanowisko: {{ osoba.stanowisko }}</p>
+    <p>Data dodania: {{ osoba.data_dodania }}</p>
+    <hr>
+{% endfor %}
+{% endblock %}

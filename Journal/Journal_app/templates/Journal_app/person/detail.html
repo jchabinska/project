@@ -1,0 +1,12 @@
+{% extends "Journal_app/base.html" %}
+
+{% block title %}Szczegóły obiektu Osoba{% endblock %}
+
+{% block content %}
+<h2>Szczegóły obiektu Osoba</h2>
+<p>Imię: {{ osoba.imie }}</p>
+<p>Nazwisko: {{ osoba.nazwisko }}</p>
+<p>Stanowisko: {{ osoba.stanowisko }}</p>
+<p>Data dodania: {{ osoba.data_dodania }}</p>
+<a href="{% url 'osoba-list' %}">Powrót do listy</a>
+{% endblock %}
