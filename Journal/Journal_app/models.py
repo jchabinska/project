@@ -1,39 +1,18 @@
 from django.db import models
 from datetime import date
 from django.core.exceptions import ValidationError
+from django.contrib.auth.models import User
+from django.utils.timezone import now
 
 
-MONTHS = models.IntegerChoices('Miesiace', 'Styczeń Luty Marzec Kwiecień Maj Czerwiec Lipiec Sierpień Wrzesień Październik Listopad Grudzień')
 
-SHIRT_SIZES = (
-        ('S', 'Small'),
-        ('M', 'Medium'),
-        ('L', 'Large'),
-    )
-
-
-class Team(models.Model):
-    name = models.CharField(max_length=60)
-    country = models.CharField(max_length=2)
-
-    def __str__(self):
-        return f"{self.name}"
-
-
-class Person(models.Model):
-
-    name = models.CharField(max_length=60)
-    shirt_size = models.CharField(max_length=1, choices=SHIRT_SIZES, default=SHIRT_SIZES[0][0])
-    month_added = models.IntegerField(choices=MONTHS.choices, default=MONTHS.choices[0][0])
-    team = models.ForeignKey(Team, null=True, blank=True, on_delete=models.SET_NULL)
-
-    def __str__(self):
-        return self.name
     
 
 class Stanowisko(models.Model):
     nazwa = models.CharField(max_length=100, null=False, blank=False)
     opis = models.TextField(blank=True, null=True)  
+    data_utworzenia = models.DateTimeField(default=now)
+    data_modyfikacji = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.nazwa
@@ -50,9 +29,18 @@ class Osoba (models.Model):
     nazwa = models.CharField(max_length=255, default= "")
     plec = models.IntegerField(choices=Plec.choices, null=False)
     stanowisko = models.ForeignKey("Stanowisko", on_delete=models.CASCADE)
-    data_dodania = models.DateField(auto_now_add=True)
+    właściciel = models.ForeignKey(User, on_delete=models.CASCADE, related_name="osoby")
+    właściciel = models.CharField(max_length=255, default='default_user')
+    data_utworzenia = models.DateTimeField(default=now)
+    data_modyfikacji = models.DateTimeField(auto_now=True)
+
     class Meta:
         ordering = ['nazwisko']
+    
+    class Meta:
+        permissions = [
+            ("can_view_other_persons", "Can view other persons"),
+        ]
 
     def __str__(self):
         return f"{self.imie} {self.nazwisko}"
@@ -64,5 +52,30 @@ class Osoba (models.Model):
     def __str__(self):
         return self.nazwa
 
+    def __str__(self):
+        return f"Person : {self.firstname} {self.lastname}, dodana w {self.month_added}, o rozmiarze koszuli {self.shirt_size}." 
+
+class Person(models.Model):
+    first_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=100)
+    email = models.EmailField(unique=True)
+    phone_number = models.CharField(max_length=15, blank=True, null=True)
+    address = models.TextField(blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"{self.first_name} {self.last_name}"  
+    
+class Team(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+    description = models.TextField(blank=True, null=True)
+    members = models.ManyToManyField(Person, related_name='teams')  # Zakładając, że osoba może być w wielu zespołach
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.name
+    
 
     

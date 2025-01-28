@@ -8,9 +8,9 @@ class StanowiskoAdmin(admin.ModelAdmin):
 
 @admin.register(Osoba)
 class OsobaAdmin(admin.ModelAdmin):
-    list_display = ('imie', 'nazwisko', 'plec', 'stanowisko', 'data_dodania')
-    list_filter = ('stanowisko', 'data_dodania')
-    readonly_fields = ('data_dodania',)
+    list_display = ('imie', 'nazwisko', 'plec', 'stanowisko', 'data_utworzenia')
+    list_filter = ('stanowisko', 'data_utworzenia')
+    readonly_fields = ('data_utworzenia',)
 
     admin.display(description='Stanowisko (ID)')
     def stanowisko_z_id(self, obj):

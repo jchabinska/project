@@ -1,5 +1,6 @@
 from rest_framework import serializers
-from .models import Osoba, Stanowisko
+from .models import Osoba, Stanowisko, Team
+from .models import Person
 
 
 class CustomSerializer(serializers.Serializer):
@@ -23,3 +24,13 @@ class StanowiskoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Stanowisko
         fields = '__all__'
+
+class PersonSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Person
+        fields = '__all__'
+
+class TeamSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Team  
+        fields = '__all__' 
